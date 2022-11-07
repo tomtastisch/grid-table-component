@@ -1,0 +1,16 @@
+.grid-container {
+	display: grid;
+}
+
+.grid-header {
+	width: 100%;
+	text-align: center;
+}
+
+.grid-item {
+	text-align: left;
+}
+
+.grid-table .grid-container .grid-item {
+	padding: 4px;
+}

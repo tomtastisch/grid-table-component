@@ -65,7 +65,8 @@ class GridContainer extends GridComponent implements HasComponents {
 		colsCount = Math.max(columnsCount, GridConstants.DEFAULT_SIZE);
 		rowLength = Math.max((int) Math.ceil((double) entries.length / colsCount), GridConstants.DEFAULT_SIZE);
 		elements = Arrays.stream(Arrays.copyOf(entries, colsCount * rowLength))
-				.map(e -> Objects.nonNull(e) ? e : new GridCell()).collect(Collectors.toCollection(LinkedHashSet::new));
+				.map(e -> Objects.requireNonNullElse(e, new GridCell()))
+				.collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 
 	public GridContainer sorted(Comparator<Component> comparator) {

@@ -50,7 +50,8 @@ class GridTable extends GridComponent implements HasComponents {
 
 	public GridTable(String tableHeaedr, ThemeType theme, int i, Comparator<Component> comp, GridComponent... entries) {
 		super(GridConstants.GRID_TABLE);
-		init(new GridHeader(theme, Objects.nonNull(tableHeaedr) ? tableHeaedr : GridHeader.NO_HEADER), new GridContainer(i, comp, entries));
+		init(new GridHeader(theme, Objects.requireNonNullElse(tableHeaedr, GridHeader.NO_HEADER)),
+				new GridContainer(i, comp, entries));
 	}
 
 	private void init(GridHeader header, GridContainer container) {
@@ -58,7 +59,7 @@ class GridTable extends GridComponent implements HasComponents {
 		this.container = container;
 		add(header, container);
 	}
-	
+
 	public GridHeader getHeader() {
 		return this.header;
 	}

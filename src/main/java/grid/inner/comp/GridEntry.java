@@ -13,7 +13,7 @@ class GridEntry extends GridComponent {
 
 	@Serial
 	private static final long serialVersionUID = 8409550102268852050L;
-	
+
 	final String name;
 
 	public GridEntry(final String name) {

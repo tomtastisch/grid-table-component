@@ -10,7 +10,7 @@ public enum Index {
 	ROW(e -> e.getParent().get().getElement().getParent().indexOfChild(e.getElement())),
 	/** Function for determining the column index. */
 	COLUMN(e -> e.getElement().getParent().indexOfChild(e.getElement()));
-	
+
 	final Function<? super GridComponent, Integer> fFunction;
 
 	/**

@@ -100,7 +100,7 @@ public abstract class GridComponent extends Component implements HasStyle {
 		components = CollectionUtils
 				.union(components.stream().filter(e -> !clean).toList(),
 						Objects.requireNonNullElse(c, new ArrayList<>()))
-				.stream().sorted(Objects.nonNull(comparator) ? comparator : (o1, o2) -> 0)
+				.stream().sorted(Objects.requireNonNullElse(comparator, (o1, o2) -> 0))
 				.collect(Collectors.toCollection(HashSet::new));
 	}
 

@@ -26,9 +26,9 @@ public class GridCell extends GridContainerElement {
 
 	@Serial
 	private static final long serialVersionUID = 2379211827906909884L;
-	
+
 	private Component component;
-	
+
 	public GridCell() {
 		this(StringConstants.PLACEHOLDER);
 	}
@@ -45,7 +45,7 @@ public class GridCell extends GridContainerElement {
 		super(component.getTheme(), GridConstants.GRID_CELL);
 		add(component);
 	}
-	
+
 	/**
 	 * @return <code>TRUE</code> if this cell contains a placeholder as text
 	 */
@@ -69,10 +69,9 @@ public class GridCell extends GridContainerElement {
 		super.add(components);
 
 		if (getComponents().size() > GridConstants.MAX_CELL_ELEMENTS_COUNT) {
-			final int columns = ColumnsUtils.getLeastDivisor(getComponents().size());
-			this.setComponents(new GridTable(columns, components));
+			this.setComponents(new GridTable(ColumnsUtils.getLeastDivisor(getComponents().size()), components));
 		}
-		
+
 		this.component = this.getComponents().stream().findFirst().orElse(null);
 	}
 }

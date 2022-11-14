@@ -1,57 +1,78 @@
 package grid.inner.comp;
 
-import java.awt.Point;
 import java.io.Serial;
+import java.util.Collection;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
 
 import grid.GridComponent;
+import grid.GridContainerElement;
 import grid.constants.GridConstants;
 import grid.constants.StringConstants;
-import grid.enums.Index;
+import grid.inner.comp.wrapper.GridWrapper;
+import grid.utils.ColumnsUtils;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * This class reflects the individual cell elements within the constructed table
  * and is used only to ensure the rendering of text and image within the table.
  */
+@Getter
 @Tag(value = "div")
-public class GridCell extends GridComponent {
+@EqualsAndHashCode(callSuper = false)
+public class GridCell extends GridContainerElement {
 
 	@Serial
 	private static final long serialVersionUID = 2379211827906909884L;
-
-	/**
-	 * Protected constructor to ensure that it can only be accessed within the table
-	 * components.
-	 */
-	protected GridCell() {
+	
+	private Component component;
+	
+	public GridCell() {
 		this(StringConstants.PLACEHOLDER);
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param aEntry -> Entry which is to be reproduced within this cell
-	 */
-	public GridCell(GridEntry aEntry) {
-		super(aEntry.getTheme(), GridConstants.GRID_CELL);
-		getElement().setText(aEntry.name);
+	public GridCell(String text) {
+		this(new GridEntry(text));
 	}
 
-	/**
-	 * Constructor
-	 * 
-	 * @param aText -> Text to be used in the header line
-	 */
-	public GridCell(String aText) {
-		super(GridConstants.DEFAULT_THEME, GridConstants.GRID_CELL);
-		getElement().setText(aText);
+	public GridCell(Component component) {
+		this(GridComponent.class.cast(component instanceof GridComponent ? component : new GridWrapper(component)));
 	}
 
+	public GridCell(GridComponent component) {
+		super(component.getTheme(), GridConstants.GRID_CELL);
+		add(component);
+	}
+	
 	/**
-	 * @return the position of this cell within the table
+	 * @return <code>TRUE</code> if this cell contains a placeholder as text
 	 */
-	public Point getPosition() {
-		return new Point(getIndex(Index.COLUMN), getIndex(Index.ROW));
+	public boolean isPlaceholder() {
+		return this.component.getElement().getText().equals(StringConstants.PLACEHOLDER);
+	}
+
+	@Override
+	public void add(String text) {
+		this.add(new GridCell(text));
+	}
+
+	@Override
+	public void add(Collection<Component> components) {
+		this.add(components.stream().toArray(Component[]::new));
+	}
+
+	@Override
+	public void add(Component... components) {
+
+		super.add(components);
+
+		if (getComponents().size() > GridConstants.MAX_CELL_ELEMENTS_COUNT) {
+			final int columns = ColumnsUtils.getLeastDivisor(getComponents().size());
+			this.setComponents(new GridTable(columns, components));
+		}
+		
+		this.component = this.getComponents().stream().findFirst().orElse(null);
 	}
 }

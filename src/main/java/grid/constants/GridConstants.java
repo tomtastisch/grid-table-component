@@ -6,6 +6,7 @@ public record GridConstants() {
 	public static final String GRID_CONTAINER = "grid-container";
 	public static final String GRID_HEADER = "grid-header";
 	public static final String GRID_TABLE = "grid-table";
+	public static final String GRID_ENTRY = "grid-entry";
 	public static final String GRID_CELL = "grid-item";
 
 	public static final String COLUMNS_OPTION = "grid-template-columns";
@@ -13,4 +14,6 @@ public record GridConstants() {
 
 	public static final ThemeType DEFAULT_THEME = ThemeType.NEUTRAL;
 	public static final int DEFAULT_SIZE = 1;
+
+	public static final int MAX_CELL_ELEMENTS_COUNT = 1;
 }

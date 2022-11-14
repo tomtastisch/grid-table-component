@@ -9,10 +9,12 @@ import grid.constants.GridConstants;
 import grid.constants.StringConstants;
 import grid.enums.ThemeType;
 
-/** This class corresponds to the header of the table to be created */
+/** 
+ * This class corresponds to the header of the table to be created 
+ */
 @Tag(value = "header")
 class GridHeader extends GridComponent {
-
+	
 	@Serial
 	private static final long serialVersionUID = 7113774239337566165L;
 
@@ -20,23 +22,18 @@ class GridHeader extends GridComponent {
 	public static final String NO_HEADER = StringConstants.EMPTY;
 
 	/**
-	 * Constructor of this class
-	 * 
-	 * @param aTheme -> Background theme of this header
-	 * @param aText  -> Text to be used in the header line
-	 */
-	public GridHeader(ThemeType aTheme, String aText) {
-		super(aTheme, GridConstants.GRID_HEADER);
-		getElement().setText(aText);
-	}
-
-	/**
-	 * Constructor of this class
-	 * 
 	 * @param aText -> Text to be used in the header line
 	 */
-	public GridHeader(String aText) {
-		super(GridConstants.GRID_HEADER);
-		getElement().setText(aText);
+	public GridHeader(String text) {
+		this(ThemeType.NEUTRAL, text);
+	}
+	
+	/**
+	 * @param theme -> Background theme of this header
+	 * @param text  -> Text to be used in the header line
+	 */
+	public GridHeader(ThemeType theme, String text) {
+		super(theme, GridConstants.GRID_HEADER);
+		getElement().setText(text);
 	}
 }
